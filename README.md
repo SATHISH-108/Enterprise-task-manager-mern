@@ -389,69 +389,8 @@ MIT
 
 
 
-
-
-
-# Enterprise Task Management Platform (MERN Stack) – Version 2
-
-
-# ⚙️ Environment Variables
-#  Backend .env file 
-
-1. NODE_ENV=development
-2. PORT=7002
-3. CLIENT_ORIGIN=http://localhost:5173
-# comma-separated allowlist; falls back to CLIENT_ORIGIN if unset
-4. CORS_ALLOWLIST=http://localhost:5173
-
-# ----- Database -----
-5. MONGO_URI=mongodb://Sathish_CH:Ch.sathish460@ac-o3qp2xm-shard-00-00.r0ntafm.mongodb.net:27017,ac-o3qp2xm-shard-00-01.r0ntafm.mongodb.net:27017,ac-o3qp2xm-shard-00-02.r0ntafm.mongodb.net:27017/test?ssl=true&replicaSet=atlas-2fdo7u-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0
-
-# ----- Auth / JWT -----
-6. JWT_ACCESS_SECRET=change-me-access
-7. JWT_REFRESH_SECRET=change-me-refresh
-# Tokens: access 15m, refresh 7d (hard-coded in utils/token.js for now)
-
-# ----- Redis (Upstash) -----
-8. REDIS_URL=rediss://default:gQAAAAAAAXe-AAIncDFlZThkYjk3NWU0N2E0OTA4ODFlNTM4MjVkYWFjNjZlZXAxOTYxOTA@apt-crane-96190.upstash.io:6379
-
-# ----- Email (Nodemailer) -----
-9. SMTP_HOST=smtp.gmail.com
-10. SMTP_PORT=587
-11. SMTP_USER=ch.sathish460@gmail.com
-12. SMTP_PASS=vkwh mqos yngb epgm
-13. SMTP_FROM="MERN Task Manager <ch.sathish460@gmail.com>"
-
-# ----- Cloudinary (attachments) -----
-14. CLOUDINARY_CLOUD_NAME=dvpd8pzkl
-15. CLOUDINARY_API_KEY=692531915228354
-16. CLOUDINARY_API_SECRET=H0MGvYtQQFICjriKvZ_qEZkyrdk
-
-# ----- AI (DeepSeek) -----
-17. DEEPSEEK_API_KEY=sk-3ef1438b4d4249eabdbb718a646f4dfc
-18. AI_MODEL=deepseek-chat
-
-# ----- Web Push (VAPID) -----
-# Generate with: node -e "console.log(require('web-push').generateVAPIDKeys())"
-19. VAPID_PUBLIC_KEY=BG14KoovhUrg4iAL30L6jVnlp-XtZGPlN93Ms5ySlBGmiKgX5_plzLvBKypA6qamueyhICn_9JUp3M1PHi6SX-Y
-20. VAPID_PRIVATE_KEY=WHUS5pjEHrBYgx_trp6XfswWOH0JF5I4bskKxkagUBc
-21. VAPID_CONTACT_EMAIL=ch.sathish460@gmail.com
-
-# ----- Public app URL (for links inside emails) -----
-22. APP_URL=http://localhost:5173
-
-# Frontend .env file
-
-<!-- VITE_API_URL=http://localhost:7002 -->
-23. VITE_API_URL= https://enterprise-task-manager-mern.onrender.com/
-
-
 # ADMIN CREDENTIAL 
 1. admin credentials
-# email: sathish91577@gmail.com
-# password: Sathish91577@
-# role : "admin"
- 2. admin credentials
 
 # email : admin@task.com
 # password : Admin@task
