@@ -143,16 +143,13 @@ function CreateWorkspaceModal({ open, onClose }) {
       setDescription("");
       onClose();
     },
-    // Surface the real error so silent failures (CSRF 403, missing route
-    // 404, network issues) become visible instead of leaving the modal
-    // hanging with no feedback.
     onError: (err) => {
       const status = err?.response?.status;
       const msg = err?.response?.data?.message;
       const detail = msg ? ` — ${msg}` : "";
       const hint =
         status === 403
-          ? " Check that the backend has been restarted (CSRF middleware was added in the last update) and that you're logged in as admin."
+          ? " You need admin permissions to create a workspace."
           : status === 404
             ? " The /workspaces endpoint isn't reachable. Restart the backend so the new module mounts."
             : "";

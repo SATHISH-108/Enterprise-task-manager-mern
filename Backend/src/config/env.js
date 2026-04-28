@@ -55,15 +55,6 @@ const schema = z.object({
     .union([z.literal("true"), z.literal("false")])
     .default("true")
     .transform((v) => v === "true"),
-
-  // When true (default), enforce double-submit CSRF tokens on state-changing
-  // requests. The XSRF-TOKEN cookie is always issued either way; only the
-  // header check is gated. Disable for non-browser clients / integration
-  // tests where attaching the header is impractical.
-  CSRF_PROTECTION: z
-    .union([z.literal("true"), z.literal("false")])
-    .default("true")
-    .transform((v) => v === "true"),
 });
 
 const parsed = schema.safeParse(process.env);

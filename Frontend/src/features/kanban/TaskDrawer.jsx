@@ -550,9 +550,6 @@ function CommentsTab({ taskId }) {
       // already pick it up via socket on their side.
     },
     onError: (err) => {
-      // Surface the real reason — previously the request silently failed
-      // (e.g. CSRF 403, 401, 500), the input cleared, and the user saw
-      // nothing happen. The inline banner below + alert make it visible.
       // eslint-disable-next-line no-alert
       alert(
         err?.response?.data?.message ||

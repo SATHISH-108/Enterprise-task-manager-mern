@@ -6,7 +6,6 @@ import {
   helmetMiddleware,
   sanitizeMiddleware,
 } from "./middleware/security.js";
-import { csrfMiddleware } from "./middleware/csrf.js";
 import { errorHandler, notFound } from "./middleware/error.js";
 
 // ensure models are registered before any router that uses them
@@ -37,7 +36,6 @@ export const buildApp = (io) => {
   app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
   app.use(sanitizeMiddleware);
-  app.use(csrfMiddleware);
 
   // attach socket.io to every request so controllers can emit directly
   app.use((req, _res, next) => {
@@ -51,18 +49,6 @@ export const buildApp = (io) => {
   app.get("/health", (_req, res) =>
     res.json({ success: true, uptime: process.uptime() }),
   );
-
-  // CSRF token bootstrap. Frontend hits this once on app boot (or after a
-  // 403 retry) to GUARANTEE the XSRF-TOKEN cookie is set before any mutation.
-  // The csrfMiddleware that ran above this handler already minted + set the
-  // cookie if it was missing; this endpoint just exposes the value so the
-  // client can confirm receipt and short-circuit any race condition.
-  app.get("/api/v2/csrf", (req, res) => {
-    res.json({
-      success: true,
-      data: { token: req.cookies?.["XSRF-TOKEN"] || null },
-    });
-  });
 
   // ----- V2 (canonical) -----
   app.use("/api/v2/auth", authRouter);
