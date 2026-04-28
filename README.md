@@ -395,214 +395,6 @@ MIT
 # Enterprise Task Management Platform (MERN Stack) – Version 2
 
 
-# Overview
-This project is an advanced Enterprise Work Management Platform built using the MERN stack (MongoDB, Express.js, React.js, Node.js). It is an evolution of a basic task management system into a scalable, collaborative platform inspired by tools like Jira, Trello, and Asana.
-Version 2 significantly enhances the system by introducing team collaboration, project structuring, real-time updates, AI-powered insights, advanced analytics, and enterprise-grade security.
-
-
-# Tech Stack
-
-# Frontend
-
-React.js
-Tailwind CSS 
-Socket.IO Client
-
-
-# Backend
-
-Node.js + Express.js
-MongoDB Atlas
-Redis (Upstash)
-Socket.IO
-DevOps & Tools
-Vercel (Frontend Deployment)
-Render / Railway (Backend Deployment)
-GitHub Actions (CI/CD)
-Docker (Containerization)
-
-
-# Testing
-Jest
-Supertest
-React Testing Library
-Cypress
-
-
-
-🏗️ System Architecture
-The backend is modular and follows a scalable architecture:
-src/ ├── modules/ │ ├── auth/ │ ├── users/ │   ├── teams/ │   ├── projects/ │   ├── tasks/ │   ├── notifications/ │   ├── analytics/ │   ├── ai/ ├── config/ ├── middleware/ ├── utils/ └── server.js
-
-# Key Features
-
- Team & Project Management
-Create multiple teams (Engineering, Marketing, HR, etc.)
-Assign users to one or more teams
-Create multiple projects under each team
-Tasks are structured under projects (not global)
-
-# Advanced Task Management
-Each task supports:
-Status workflow:
-Backlog → Todo → In Progress → In Review → Blocked → Completed → Archived
-Priority levels (Low, Medium, High)
-Estimated vs actual hours
-Start, due, and completion dates
-Task dependencies (blocking tasks)
-
-
-# Kanban Board (Drag & Drop)
-Visual task management using columns
-Drag-and-drop task updates
-Real-time updates via Socket.IO
-
-
-# Filters:
-Team
-Project
-Assignee
-Status
-Priority
-
-# Collaboration System
-Task comments & notes
-@mentions for users
-Activity history tracking:
-Task creation
-Assignment changes
-Status updates
-Comments
-Completion logs
-
-
-# 🔔 Notification System
-Users receive notifications for:
-Task assignment
-Status changes
-Comments & mentions
-Due date reminders
-Overdue alerts
-
-# Notification channels:
-
-In-app notifications
-Email notifications
-Browser push notifications
-(Optional: Slack integration)
-
-# 📎 File Attachments
-Upload files (images, PDFs, documents)
-Multiple attachments per task
-Preview & download support
-Storage via Cloudinary / UploadThing
-
-
-# 📈 Advanced Dashboards
-Admin Dashboard
-Tasks created per day
-Weekly completion trends
-Overdue tasks
-Project completion percentage
-Priority distribution
-Top-performing users/teams
-User Dashboard
-Assigned tasks
-Completed tasks
-Overdue tasks
-Weekly workload
-Productivity insights
-
-
-
-# 🤖 AI-Powered Features
-1. Smart Task Generation
-Auto-generate:
-Description
-Priority
-Difficulty
-Subtasks
-
-Example:
-
-“Build login page” → generates UI, validation, API integration, JWT handling, testing
-
-
-2. Smart Assignment
-
-Suggests best user based on:
-Workload
-Past performance
-Task completion speed
-Skill relevance
-
-3. Natural Language Search
-Users can search like:
-“Show overdue high priority tasks”
-“Rahul’s completed tasks this week”
-“Tasks due tomorrow”
-
-
-4. Delay Prediction
-
-Predicts risk level:
-Low / Medium / High
-# Based on:
-Workload
-Due date
-Progress
-Historical performance
-
-5. AI Assistant (Conversational)
-Users can ask:
-“Which tasks are overdue?”
-“Who is least busy?”
-“Summarize project progress”
-“Create a task for login bug”
-
-
-# 🔐 Security Features
-
-Email verification
-Forgot & reset password
-JWT authentication
-Optional 2FA (OTP)
-Account lock on failed attempts
-Helmet middleware
-CORS protection
-CSRF protection
-
-
-# ⚡ Redis Usage (Upstash)
-Redis is used for:
-Caching dashboard data
-Refresh token storage
-Real-time pub/sub (Socket.IO)
-Notification queues
-Active session tracking
-
-# 🧪 Testing Strategy
-Unit Tests (Jest)
-API Tests (Supertest)
-Component Tests (React Testing Library)
-End-to-End Tests (Cypress)
-
-
-# 🚀 Deployment
-1.Frontend => Vercel
-2.Backend => Render 
-
-# 🔄 CI/CD Pipeline
-Implemented using GitHub Actions:
-Linting
-Running tests
-Build validation
-Auto deployment
-
-# 🐳 Docker Support
-Run locally using:
-docker-compose up --build
-
 # ⚙️ Environment Variables
 #  Backend .env file 
 
@@ -655,9 +447,15 @@ docker-compose up --build
 
 
 # ADMIN CREDENTIAL 
+1. admin credentials
 # email: sathish91577@gmail.com
 # password: Sathish91577@
 # role : "admin"
+ 2. admin credentials
+
+# email : admin@task.com
+# password : Admin@task
+# role: "admin"
 
 # 📸 Screenshots
 Kanban Board
@@ -689,37 +487,3 @@ Task Details View
 1. cd Frontend
 2. npm install (It install all node module packages)
 3. npm run dev  (It run the Frontend project) 
-
-# #Note 
-# 🔐 Two-Factor Authentication (2FA)
-
-For enhanced security, this application supports Two-Factor Authentication (2FA) during login.
-
-To use this feature, you need to install an authenticator app on your mobile device.
-
-# 📱 Recommended App:
-Google Authenticator (Available on Play Store)
-⚙️ How it works:
-1. During setup, a QR code or secret key will be provided.
-2. Scan the QR code using the Google Authenticator app.
-3. The app will generate a 6-digit code that changes every few seconds.
-4. Enter this code during login to complete authentication.
-# ⚠️ Important Note:
-1. Make sure your device time is synchronized correctly for valid OTP generation.
-2. Without the correct 6-digit code, login will not be allowed.
-
-# Two Factor Authentication Process
-
-The application has a Two-Factor Authentication (2FA) feature for better security.
-
-1. When a user & admin tries to log in and 2FA(Two Factor Authentication) is turned off(From the MongoDB), they must first verify their email. A verification link is sent to their email, and after verifying, they can log in and go to the dashboard.
-
-2. In the dashboard, the user can click on the profile icon and see options like Settings and Sign Out. In the Settings page, they can see whether 2FA is enabled or disabled.
-
-3. If the user wants to enable 2FA, they can click the enable button. A QR code will be shown along with a field to enter a 6-digit code. The user needs to scan the QR code using an authenticator app (like Google Authenticator From Playstore). The app will generate a 6-digit code that changes every few seconds.
-
-4. The user must enter this code in the input field. Once the code is verified, 2FA will be enabled and saved in the database (MongoDB).
-
-5. If the user does not want 2FA, they can disable it anytime from the Settings page.
-
-Note: In Email I attached a PDF File it contains all screenshots of Two Factor Authentication process.
