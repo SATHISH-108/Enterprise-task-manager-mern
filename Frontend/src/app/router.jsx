@@ -11,7 +11,6 @@ import TeamsPage from "../features/teams/TeamsPage.jsx";
 import TeamDetailPage from "../features/teams/TeamDetailPage.jsx";
 import ProjectsPage from "../features/projects/ProjectsPage.jsx";
 import ProjectBoardPage from "../features/projects/ProjectBoardPage.jsx";
-import SettingsPage from "../features/settings/SettingsPage.jsx";
 import AssistantWidget from "../features/ai/AssistantWidget.jsx";
 import TaskRedirect from "../features/kanban/TaskRedirect.jsx";
 import AllTasksPage from "../features/tasks/AllTasksPage.jsx";
@@ -100,14 +99,6 @@ export default function AppRouter() {
           element={
             <RequireAuth allowedRoles={["admin"]}>
               <AdminDashboard />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <RequireAuth>
-              <SettingsPage />
             </RequireAuth>
           }
         />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { LogOut, Settings } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useAuth } from "../../store/authStore.js";
 import Avatar from "./Avatar.jsx";
 import NotificationBell from "../../features/notifications/NotificationBell.jsx";
@@ -80,13 +80,6 @@ export default function Navbar() {
               role="menu"
               className="absolute right-0 top-10 min-w-[180px] rounded-md border border-slate-100 bg-white p-1 shadow-lg"
             >
-              <Link
-                to="/settings"
-                onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
-              >
-                <Settings size={14} /> Settings
-              </Link>
               <button
                 onClick={doLogout}
                 className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"

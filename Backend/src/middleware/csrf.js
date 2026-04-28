@@ -22,7 +22,7 @@
  */
 
 import crypto from "crypto";
-import env from "../config/env.js";
+import env, { isProd } from "../config/env.js";
 import { HttpError } from "../utils/response.js";
 
 const COOKIE_NAME = "XSRF-TOKEN";
@@ -65,8 +65,10 @@ export const csrfMiddleware = (req, res, next) => {
     token = mintToken();
     res.cookie(COOKIE_NAME, token, {
       httpOnly: false,
-      sameSite: "lax",
-      secure: env.NODE_ENV === "production",
+      // Cross-site cookies (frontend on vercel.app, API on a different domain)
+      // require SameSite=None + Secure. Match the auth cookies in utils/token.js.
+      sameSite: isProd ? "none" : "lax",
+      secure: isProd,
       path: "/",
     });
   }

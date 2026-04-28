@@ -34,6 +34,9 @@ export default function TeamDetailPage() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["team", id] }),
   });
 
+  const mutationError = (m) =>
+    m.error?.response?.data?.message || m.error?.message || null;
+
   if (team.isLoading) {
     return (
       <div className="flex h-60 items-center justify-center">
@@ -104,12 +107,20 @@ export default function TeamDetailPage() {
         </ul>
       </section>
 
-      {canManage ? <AddMemberCard teamId={id} onAdd={add.mutate} /> : null}
+      {canManage ? (
+        <AddMemberCard
+          teamId={id}
+          onAdd={add.mutate}
+          isPending={add.isPending}
+          isSuccess={add.isSuccess && !add.isPending}
+          errorMessage={mutationError(add) || mutationError(remove)}
+        />
+      ) : null}
     </main>
   );
 }
 
-function AddMemberCard({ teamId, onAdd }) {
+function AddMemberCard({ teamId, onAdd, isPending, isSuccess, errorMessage }) {
   const [q, setQ] = useState("");
   const users = useQuery({
     queryKey: ["users", q],
@@ -118,6 +129,7 @@ function AddMemberCard({ teamId, onAdd }) {
   });
 
   const items = users.data?.data?.items || [];
+  const showSuccess = isSuccess && !errorMessage;
 
   return (
     <section className="rounded-lg border border-slate-100 bg-white p-4">
@@ -129,6 +141,16 @@ function AddMemberCard({ teamId, onAdd }) {
         value={q}
         onChange={(e) => setQ(e.target.value)}
       />
+      {errorMessage ? (
+        <div className="mt-2 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+          {errorMessage}
+        </div>
+      ) : null}
+      {showSuccess ? (
+        <div className="mt-2 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs text-emerald-700">
+          Member added.
+        </div>
+      ) : null}
       {q.length >= 2 && (
         <ul className="mt-2 max-h-60 divide-y divide-slate-100 overflow-y-auto rounded-md border border-slate-100">
           {items.length === 0 ? (
@@ -149,9 +171,10 @@ function AddMemberCard({ teamId, onAdd }) {
                 <Button
                   size="sm"
                   variant="secondary"
+                  disabled={isPending}
                   onClick={() => onAdd(u._id)}
                 >
-                  <UserPlus size={14} /> Add
+                  <UserPlus size={14} /> {isPending ? "Adding…" : "Add"}
                 </Button>
               </li>
             ))
