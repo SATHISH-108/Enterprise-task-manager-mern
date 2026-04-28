@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./Backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      NODE_ENV: production
+      PORT: 7002
+      CLIENT_ORIGIN: http://localhost:8080
+      CORS_ALLOWLIST: http://localhost:8080,http://localhost:5173
+      MONGO_URI: mongodb://mongo:27017/mern_task_manager
+      REDIS_URL: redis://redis:6379
+      JWT_ACCESS_SECRET: dev-access-secret-change-me
+      JWT_REFRESH_SECRET: dev-refresh-secret-change-me
+      APP_URL: http://localhost:8080
+      DEEPSEEK_API_KEY: ""
+      AI_MODEL: deepseek-chat
+      VAPID_PUBLIC_KEY: ""
+      VAPID_PRIVATE_KEY: ""
+      VAPID_CONTACT_EMAIL: ""
+      SLACK_WEBHOOK_URL: ""
+    ports:
+      - "7002:7002"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:7002
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+
+volumes:
+  mongo-data: {}
+  redis-data: {}
